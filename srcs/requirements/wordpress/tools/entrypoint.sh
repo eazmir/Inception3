@@ -26,7 +26,7 @@ then
 		--allow-root
 
 	wp core install \
-		--url="${DOMAINE_NAME}" \
+		--url="http://localhost:8080" \
 		--title="${SITE_TITLE}" \
 		--admin_user="${ADMIN_USERNAME}" \
 		--admin_password="${ADMIN_PASSWORD}" \
