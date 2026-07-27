@@ -12,3 +12,5 @@ fclean: clean
 	sudo rm -rf /home/eazmir/data/db-data/*
 
 re: fclean all
+
+.PHONE: fclean clean re 
