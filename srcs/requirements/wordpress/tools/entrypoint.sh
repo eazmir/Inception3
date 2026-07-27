@@ -9,7 +9,6 @@ USER_PASSWORD=$(cat /run/secrets/passwords | tail -1)
 
 cd "$path"
 
-# if [ -z "$(ls -A "$path")" ]; 
 if [ ! -f /var/www/html/wp-config.php ]; 
 then
 	wp core download --allow-root
