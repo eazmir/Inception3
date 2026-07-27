@@ -1,0 +1,100 @@
+services:
+  nginx:
+    build: ./requirements/nginx
+    container_name: nginx
+    depends_on:
+      - php-fpm
+    ports:
+      - 8080:80
+    networks:
+      - frontend
+    volumes:
+      - ./wp-data:/var/www/html
+
+  php-fpm:
+    build: ./requirements/wordpress
+    container_name: php-fpm
+    restart: always
+    depends_on:
+      - mariadb
+    networks:
+      - frontend
+      - backend
+    volumes:
+      - ./wp-data:/var/www/html
+    env_file:
+      - .env
+    secrets:
+      - password
+      - admin_password
+
+  mariadb:
+    build: ./requirements/mariadb
+    container_name: mariadb
+    restart: always
+    networks:
+      - backend
+    # volumes:
+    #   - db-data:/var/lib/mysql
+    env_file:
+      - .env
+    secrets:
+      - password
+
+networks:
+  frontend:
+  backend:
+
+volumes:
+  wp-data:
+  # db-data:
+
+secrets:
+  password:
+    file: ./password.txt
+  admin_password:
+    file: ./admin_password.txt
+
+# services:
+#   nginx:
+#     build: ./requirements/nginx
+#     container_name: nginx
+#     ports:
+#       - 8080:80
+#     networks:
+#       - frontend
+#     volumes:
+#       - ./wp-data:/var/www/html
+
+#   php-fpm:
+#     build: ./requirements/wordpress
+#     container_name: php-fpm
+#     networks:
+#       - frontend
+#       - backend
+#     volumes:
+#       - ./wp-data:/var/www/html
+#     env_file:
+#       - .env
+#     secrets:
+#       - password
+
+#   mariadb:
+#     build: ./requirements/mariadb
+#     container_name: mariadb
+#     networks:
+#       - backend
+#     env_file:
+#       - .env
+#     secrets:
+#       - password
+# networks:
+#   frontend:
+#   backend:
+
+# volumes:
+#  wp-data:
+
+# secrets:
+#  password:
+#   file: ./password.txt
