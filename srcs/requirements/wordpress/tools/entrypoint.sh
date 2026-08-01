@@ -3,9 +3,9 @@ set -e
 
 path="/var/www/html"
 
-DB_PASSWORD=$(head -1 /run/secrets/passwords)
-ADMIN_PASSWORD=$(cat /run/secrets/passwords  | head -2 | tail -1)
-USER_PASSWORD=$(cat /run/secrets/passwords | tail -1)
+DB_PASSWORD=$(grep "db_password:" /run/secrets/passwords | cut -d':' -f2)
+ADMIN_PASSWORD=$(grep "admin_password:" /run/secrets/passwords | cut -d':' -f2)
+USER_PASSWORD=$(grep "user_passwowrd:" /run/secrets/passwords | cut -d':' -f2)
 
 cd "$path"
 
@@ -26,7 +26,7 @@ then
 		--allow-root
 
 	wp core install \
-		--url="http://localhost:8080" \
+		--url="${DOMAIN_NAME}" \
 		--title="${SITE_TITLE}" \
 		--admin_user="${ADMIN_USERNAME}" \
 		--admin_password="${ADMIN_PASSWORD}" \

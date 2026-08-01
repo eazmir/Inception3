@@ -2,7 +2,7 @@ all:
 	mkdir -p /home/eazmir/data
 	mkdir -p /home/eazmir/data/wp-data
 	mkdir -p /home/eazmir/data/db-data
-	docker-compose -f srcs/docker-compose.yml up --build
+	docker-compose -f srcs/docker-compose.yml up --build --force-recreate
 
 clean:
 	docker-compose -f srcs/docker-compose.yml down -v

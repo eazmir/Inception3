@@ -1,19 +1,21 @@
 services:
   nginx:
+    image: nginx
     build: ./requirements/nginx
     container_name: nginx
     depends_on:
-      - php-fpm
+      - wordpress
     ports:
-      - 8080:80
+      - 443:443
     networks:
       - frontend
     volumes:
       - wp-data:/var/www/html
 
-  php-fpm:
+  wordpress:
+    image: wordpress
     build: ./requirements/wordpress
-    container_name: php-fpm
+    container_name: wordpress
     restart: always
     depends_on:
       - mariadb
@@ -28,6 +30,7 @@ services:
       - passwords
 
   mariadb:
+    image: mariadb
     build: ./requirements/mariadb
     container_name: mariadb
     restart: always
@@ -61,4 +64,3 @@ volumes:
 secrets:
   passwords:
     file: ./secrets/passwords
-

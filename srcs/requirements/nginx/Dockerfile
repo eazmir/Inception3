@@ -1,6 +1,17 @@
 FROM debian:bookworm
 
-RUN 	apt update && apt install -y nginx
+RUN 	apt update && apt install -y nginx openssl
+
+RUN mkdir -p /etc/nginx/ssl
+
+RUN openssl req \
+    -x509 \
+    -nodes \
+    -days 365 \
+    -newkey rsa:2048 \
+    -keyout /etc/nginx/ssl/inception.key \
+    -out /etc/nginx/ssl/inception.crt \
+    -subj "/C=MA/ST=Marrakech-Safi/L=Benguerir/O=42/OU=Inception/CN=eazmir.42.fr"
 
 COPY conf/nginx.conf /etc/nginx/sites-enabled/nginx.conf
 
