@@ -25,9 +25,10 @@ services:
     volumes:
       - wp-data:/var/www/html
     env_file:
-      - ./config/.env
+      - ../config/.env
     secrets:
-      - passwords
+      - credentials
+      - db_password
 
   mariadb:
     image: mariadb
@@ -39,9 +40,10 @@ services:
     volumes:
       - db-data:/var/lib/mysql
     env_file:
-      - ./config/.env
+      - ../config/.env
     secrets:
-      - passwords 
+      - db_password
+      - db_root_password
 
 networks:
   frontend:
@@ -62,5 +64,9 @@ volumes:
       device: /home/eazmir/data/db-data
 
 secrets:
-  passwords:
-    file: ./secrets/passwords
+  db_password:
+    file: ../secrets/db_password.txt
+  db_root_password:
+    file: ../secrets/db_root_password.txt
+  credentials:
+    file: ../secrets/credentials.txt

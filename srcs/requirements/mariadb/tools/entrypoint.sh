@@ -2,8 +2,8 @@
 
 set -e
 
-export DB_PASSWORD=$(grep "db_password:" /run/secrets/passwords   | cut -d':' -f2)
-export ROT_PASSWORD=$(grep "dbr_password:" /run/secrets/passwords | cut -d':' -f2)
+export DB_PASSWORD=$(cat /run/secrets/db_password)
+export ROOT_PASSWORD=$(cat /run/secrets/db_root_password)
 
 mkdir -p /run/mysqld
 mkdir -p /var/lib/mysql
@@ -16,7 +16,7 @@ then
 	mariadbd --user=mysql &
 	sleep 4
 	envsubst < init.sql | mysql -u root
-	mariadb-admin -u root --password="${ROT_PASSWORD}" shutdown
+	mariadb-admin -u root --password="${ROOT_PASSWORD}" shutdown
 fi
 
 exec mariadbd --user=mysql

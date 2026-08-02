@@ -3,9 +3,9 @@ set -e
 
 path="/var/www/html"
 
-DB_PASSWORD=$(grep "db_password:" /run/secrets/passwords | cut -d':' -f2)
-ADMIN_PASSWORD=$(grep "admin_password:" /run/secrets/passwords | cut -d':' -f2)
-USER_PASSWORD=$(grep "user_passwowrd:" /run/secrets/passwords | cut -d':' -f2)
+DB_PASSWORD=$(cat /run/secrets/db_password)
+ADMIN_PASSWORD=$(cat /run/secrets/credentials | grep "Admin Password:" | cut -d':' -f2)
+USER_PASSWORD=$(cat /run/secrets/credentials  | grep "User Password:"  | cut -d':' -f2)
 
 cd "$path"
 
